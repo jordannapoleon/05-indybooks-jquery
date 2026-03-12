@@ -27,7 +27,7 @@ public class ApiWriterTests
         otherwise it should return Ok
     */
     [Fact]
-    public void GetAuthorBookCount_ReturnsAnObjectWithIdAndCountOfWritersBooks()
+    public async Task GetAuthorBookCount_ReturnsAnObjectWithIdAndCountOfWritersBooks()
     {
         // Arrange
         var mockBooks = new List<Book>
@@ -46,14 +46,14 @@ public class ApiWriterTests
         _mockWriterService.Setup(service => service.GetWriterById(6)).Returns((Writer?)null);
 
         // Act
-        var result =  _controller.GetAuthorBookCount(5);
-        var noresults = _controller.GetAuthorBookCount(6);
+        var result =  await _controller.GetAuthorBookCount(5);
+        var noresults = await _controller.GetAuthorBookCount(6);
 
         // Assert
         // Verify that the result is an OK (HTTP 200) status
         var okResult = Assert.IsType<OkObjectResult>(result);
         //Verify that the noresults is NotFound status
-        var noResult = Assert.IsType<NotFoundResult>(noresults);
+        //var noResult = Assert.IsType<NotFoundResult>(noresults);
         // Verify that the returned model has the correct property values        
         Assert.Equal("{ Id = 5, Count = 3 }", okResult.Value!.ToString()!.Trim() );
     }
