@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using IndyBooks.Models;
 using IndyBooks.Services;
+using System.Runtime.InteropServices.JavaScript;
+using Microsoft.JSInterop.Implementation;
 
 namespace IndyBooks.Controllers
 {
@@ -13,14 +15,20 @@ namespace IndyBooks.Controllers
          * BOOK COUNT: returns a new object holding the count of all the books by a single Author as
                     Be sure it passes the ApiWriterTests  BOOK COUNT TEST
          */
+
+
         //TODO: Write the [HttpGet] annotation with the API route for this call
-       
+        [Route("writer/{id}/bookcount")]
+        [HttpGet]
         public IActionResult GetAuthorBookCount(long id)
         {
-            //TODO: return NotFound if their are no writers in the db with the id
-            
+            Writer writer = _writerService.GetWriterById(id);
+
+            //DONE: return NotFound if their are no writers in the db with the id
+            if(writer is null) { return NotFound(); };
+
             //TODO: return OK with the AJAX data as a new object, e.g.,{ Count = 3, Id = 5 } for the given writer         
-            return Ok();
+            return Ok( new { Count = _writerService.GetAllBooksByWriter(id).Count, Id = id } );
         }
         /**
          * READ ALL: Retrieves a collection of writers
