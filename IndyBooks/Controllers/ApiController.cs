@@ -20,17 +20,17 @@ namespace IndyBooks.Controllers
         //TODO: Write the [HttpGet] annotation with the API route for this call
         [Route("writer/{id}/bookcount")]
         [HttpGet]
-        public async Task<IActionResult> GetAuthorBookCount(long id)
+        public IActionResult GetAuthorBookCount(long id)
         {
             Writer writer = _writerService.GetWriterById(id);
 
-            var result = await _writerService.GetAllBooksByWriter(id);
+            var result =  _writerService.GetAllBooksByWriter(id);
 
             //DONE: return NotFound if their are no writers in the db with the id
             if(writer is null) { return NotFound(); };
 
             //TODO: return OK with the AJAX data as a new object, e.g.,{ Count = 3, Id = 5 } for the given writer         
-            return Ok( new { Count = result.Count(), Id = id } );
+            return Ok( new { Id = id, Count = result.Count(), } );
         }
         /**
          * READ ALL: Retrieves a collection of writers

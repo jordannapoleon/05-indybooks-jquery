@@ -9,10 +9,10 @@ public class ApiWriterService : IWriterService
     public ApiWriterService(IndyBooksDataContext db) { _db = db; }
 
     
-    public async Task<List<Book>> GetAllBooksByWriter(long id) 
-    {
+    public List<Book> GetAllBooksByWriter(long id) 
+    {        
         //TODO: Implement the method GetAllBooksByWriter for IWriterService
-        List<Book> result = _db.Books.Where(b => b.AuthorId == id).ToList();
+        List<Book> result = _db.Books.Where(b => b.AuthorId == id).ToList();;
 
         return result;
     }
