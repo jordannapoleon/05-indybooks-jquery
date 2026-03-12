@@ -18,7 +18,7 @@ namespace IndyBooks.Controllers
 
 
         //TODO: Write the [HttpGet] annotation with the API route for this call
-        [Route("writer/{id}/bookcount")]
+        [Route("writers/{id}/bookcount")]
         [HttpGet]
         public IActionResult GetAuthorBookCount(long id)
         {
